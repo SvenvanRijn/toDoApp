@@ -11,18 +11,30 @@ if (isset($_SESSION['username'])) {
 }
 
 if (isset($_POST['submit'])) {
+	global $database;
 	$email = $_POST['email'];
 	$password = md5($_POST['password']);
-
-	$sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-	$result = mysqli_query($conn, $sql);
-	if ($result->num_rows > 0) {
-		$row = mysqli_fetch_assoc($result);
-		$_SESSION['username'] = $row['username'];
+	$sql = "SELECT id, username FROM users WHERE email='$email' AND password='$password'";
+	$result = $database->prepare($sql);
+	$userdata;
+	try{
+		$result->execute();
+		$result->setFetchMode(PDO::FETCH_ASSOC);
+		foreach ($result as $data){
+			$userdata = $data;
+		}
+	}
+	catch(PDOException $e){
+		echo "<script> alert('iets ging fout'); </script>";
+	}
+	if ($userdata["id"] != 0) {
+		$_SESSION['user_id'] = $userdata["id"];
+		$_SESSION['username'] = $userdata['username'];
 		header("Location: welcome.php");
 	} else {
-		echo "<script>alert( E-mail of wachtwoord is fout.')</script>";
+		echo "<script>alert('E-mail of wachtwoord is fout.')</script>";
 	}
+	
 }
 
 ?>

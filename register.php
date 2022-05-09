@@ -6,9 +6,6 @@ error_reporting(0);
 
 session_start();
 
-if (isset($_SESSION['username'])) {
-    header("Location: index.php");
-}
 
 if (isset($_POST['submit'])) {
 	$username = $_POST['username'];
@@ -17,14 +14,33 @@ if (isset($_POST['submit'])) {
 	$cpassword = md5($_POST['cpassword']);
 
 	if ($password == $cpassword) {
-		$sql = "SELECT * FROM users WHERE email='$email'";
-		$result = mysqli_query($conn, $sql);
-		if (!$result->num_rows > 0) {
-			$sql = "INSERT INTO users (username, email, password)
+		global $database;
+		$query = "SELECT * FROM users WHERE email='$email'";
+		$sql = $database->prepare($query);
+		$result;
+		try{
+			$sql->execute($data);
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+			foreach ($sql as $data){
+				$result = $data;
+			}
+		}
+		catch(PDOException $e){
+			echo "<script> alert('iets ging fout'); </script>";
+		}
+		if ($result == 0) {
+			$query = "INSERT INTO users (username, email, password)
 					VALUES ('$username', '$email', '$password')";
-			$result = mysqli_query($conn, $sql);
-			if ($result) {
-				echo "<script>alert('! Welkome in onze App.')</script>";
+			$insert = $database->prepare($query);
+			try{
+				$insert->execute($data);
+			}
+			catch(PDOException $e){
+				echo "<script> alert('iets ging fout'); </script>";
+			}
+			if ($insert) {
+				echo "<script>alert('! Welkom bij onze App.')</script>";
+				$_SESSION["username"] = $username;
 				$username = "";
 				$email = "";
 				$_POST['password'] = "";
@@ -39,6 +55,10 @@ if (isset($_POST['submit'])) {
 	} else {
 		echo "<script>alert('Wachtwoord komt niet overeen.')</script>";
 	}
+}
+
+if (isset($_SESSION['username'])) {
+    header("Location: index.php");
 }
 
 ?>

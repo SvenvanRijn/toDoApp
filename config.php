@@ -1,14 +1,15 @@
 <?php 
-
-$server = "localhost";
-$username = "root";
-$password = "";
-$database = "tado";
-
-$conn = mysqli_connect($server, $username, $password, $database);
-
-if (!$conn) {
-    die("<script>alert('Connection Failed.')</script>");
-}
+    $dbhost = "localhost";
+    $dbname = "todoapp";
+    $user = "root";
+    $pass = "";
+    global $database;
+    $database = new PDO("mysql:host=$dbhost;dbname=$dbname",$user, $pass);
+    try{
+        $database->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e){
+        echo $e->getMessage();
+    }
 
 ?>
