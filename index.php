@@ -7,7 +7,7 @@ session_start();
 error_reporting(0);
 
 if (isset($_SESSION['username'])) {
-    header("Location: welcome.php");
+    header("Location: Taken.php");
 }
 
 if (isset($_POST['submit'])) {
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 	if ($userdata["id"] != 0) {
 		$_SESSION['user_id'] = $userdata["id"];
 		$_SESSION['username'] = $userdata['username'];
-		header("Location: welcome.php");
+		header("Location: Taken.php");
 	} else {
 		echo "<script>alert('E-mail of wachtwoord is fout.')</script>";
 	}

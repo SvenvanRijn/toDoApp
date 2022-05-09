@@ -43,11 +43,11 @@ if (isset($_POST['submit'])) {
 			}
 			if ($insert) {
 				echo "<script>alert('! Welkom bij onze App.')</script>";
-				$_SESSION["username"] = $username;
 				$username = "";
 				$email = "";
 				$_POST['password'] = "";
 				$_POST['cpassword'] = "";
+				header("Location: index.php");
 			} else {
 				echo "<script>alert(' Er ging iets mis.')</script>";
 			}

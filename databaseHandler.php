@@ -2,7 +2,9 @@
 
     include 'config.php';
 
-    $user = $_SESSION["username"];
+    session_start();
+
+    $user = $_SESSION["user_id"];
     $task = $_GET["task"];
     $taakID = $_GET["taakID"];
     $taakData = $_GET["taakData"];
@@ -60,9 +62,9 @@
     }
 
     //-----FETCH DATA-----
-    function FetchData(){
+    function FetchData($user){
         global $database;
-        $query = "SELECT * FROM taken WHERE username = $user";
+        $query = "SELECT * FROM taken WHERE used_id = $user";
         $taken = $database->prepare($query);
         try{
             $taken->execute();
@@ -118,5 +120,5 @@
             break;
         
     }
-    FetchData();
+    FetchData($user);
 ?>
