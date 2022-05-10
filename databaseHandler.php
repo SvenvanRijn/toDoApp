@@ -38,7 +38,7 @@
     //-----INSERT-----
     function InsertTaak($data){
         global $database;
-        $query = "INSERT INTO taken(taak_naam, taak_afgerond, taak_bdatum, taak_edatum, username) values (?, ?, ? ,?, $username)";
+        $query = "INSERT INTO taken(taak_naam, taak_afgerond, taak_bdatum, taak_edatum, used_id) values (?, ?, ? ,?, ?)";
         $insert = $database->prepare($query);
         try{
             $insert->execute($data);
@@ -76,23 +76,23 @@
                 echo "<td class='begindatum'>".$taak["taak_bdatum"]."</td>";
                 echo "<td class='einddatum'>".$taak["taak_edatum"]."</td>";
                 echo "<td class='afgerond'><button type='button' class='btn btn-success' onclick='taakAfronden(".$taak["taak_id"].")'>Afronden</button></td>                          
-                    <td class='wijzigen'><button type='button' class='btn btn-secondary' onclick='taakWijzigen()'>Wijzigen</button></td> 
-                    <td class='verwijderen'><button type='button' class='btn btn-danger' onclick='taakVerwijderen()'>Verwijderen</button></td>";
-                echo " </tr> <br>";
+                    <td class='wijzigen'><button type='button' class='btn btn-secondary' onclick='taakUpdaten()'>Wijzigen</button></td> 
+                    <td class='verwijderen'><button type='button' class='btn btn-danger' onclick='taakVerwijderen(".$taak["taak_id"].")'>Verwijderen</button></td>";
+                echo " </tr> ";
                 }
             }
             $taken->execute();
             $taken->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($taken as $taak){
                 if($taak["taak_afgerond"] == 1){
-                echo "<tr id=taaknr".$taak["taak_id"].">";
+                echo "<tr id=taaknr".$taak["taak_id"]." class=taakafgerond>";
                 echo "<td class='taaknaam'>".$taak["taak_naam"]."</td>";
                 echo "<td class='begindatum'>".$taak["taak_bdatum"]."</td>";
                 echo "<td class='einddatum'>".$taak["taak_edatum"]."</td>";
                 echo "<td class='afgerond'><button type='button' class='btn btn-success' onclick='taakAfronden(".$taak["taak_id"].")'>Afronden</button></td>                          
-                    <td class='wijzigen'><button type='button' class='btn btn-secondary' onclick='taakWijzigen()'>Wijzigen</button></td> 
-                    <td class='verwijderen'><button type='button' class='btn btn-danger' onclick='taakVerwijderen()'>Verwijderen</button></td>";
-                echo " </tr> <br>";
+                    <td class='wijzigen'><button type='button' class='btn btn-secondary' onclick='taakUpdaten()'>Wijzigen</button></td> 
+                    <td class='verwijderen'><button type='button' class='btn btn-danger' onclick='taakVerwijderen(".$taak["taak_id"].")'>Verwijderen</button></td>";
+                echo " </tr> ";
                 }
             }
         }
@@ -115,7 +115,7 @@
             UpdateTaak($updateData);
             break;
         case "add":
-            $insertData = array($taakData, "0", $datum, "" );
+            $insertData = array($taakData, "0", $datum, "" , $user);
             InsertTaak($insertData);
             break;
         
