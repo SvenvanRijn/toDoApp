@@ -24,8 +24,8 @@ $nextWeek = $nextWeek->format("Y-m-d");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="taakstyle.css?v=8">
-    <script src="scripts.js?v=2"></script>
+    <link rel="stylesheet" href="taakstyle.css?v=1">
+    <script src="scripts.js"></script>
     <title>ToDo-app</title>
 </head>
 <body>
@@ -41,11 +41,17 @@ $nextWeek = $nextWeek->format("Y-m-d");
 </nav>
   <div class="container-lg pb-5 taakcontainer">
     <h2>Takenlijst</h2> 
-    <input type="text" placeholder="Taaknaam" name="taaknaam" id="taaknaam" required>
-    <input type="date" id="begindatum" value=<?php echo date("Y-m-d") ?>>
-    <input type="date" id="einddatum" value=<?php echo $nextWeek;?>>
-    <button id="btntaakadd" class="btn btn-success" onclick="prepareTaak()">Taak toevoegen</button>
     
+    
+    
+    
+    <div class='row'> 
+        <div class='col-md'><b>Nieuwe taak:</b> <input type="text" placeholder="Taaknaam" name="taaknaam" id="taaknaam" required></div>
+        <div class='col-md taak-data'><input type="date" id="begindatum" value=<?php echo date("Y-m-d") ?>> </div>
+        <div class='col-md taak-data'><input type="date" id="einddatum" value=<?php echo $nextWeek;?>></div>
+        <div class='col-md taak-nobutton p-0'><button id="btntaakadd" class="btn btn-success" onclick="prepareTaak()">Taak toevoegen</button> </div>  
+      </div>
+
     <div class='container-lg rounded-3'>
       <div class='row bg-info rounded-2 border border-dark'> 
         <div class='col-md p-2'><h4>Taaknaam </h4></div>

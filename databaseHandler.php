@@ -123,9 +123,10 @@
         $sdatum = date_create($edatum);
         $adatum = date_create($done);
         $dif = date_diff($fdatum, $sdatum);
-        $fdatum = $fdatum->format("d-m-Y");
+        $datum = $datum->format("d-m-Y");
         $sdatum = $sdatum->format("d-m-Y");
         $adatum = $adatum->format("d-m-Y");
+        $text = "";
 
         if($dif->format("%R") == "+"){
             $color = "text-success";
@@ -142,26 +143,24 @@
         if($done != "0000-00-00"){
             $color = "text-success";
             $dif = $adatum;
+            $text = "disabled";
         }
         echo "<div class='row rounded-2 mt-1 bg-light'>";
             echo "<div class='col-md p-2'>".$naam." </div>";
             echo "<div class='col-md p-2 taak-data'><b class='".$color."'>".$dif."</b></div>";
-            echo "<div class='col-md p-2 taak-datums'>".$fdatum."</div>";
+            echo "<div class='col-md p-2 taak-datums'>".$datum."</div>";
             echo "<div class='col-md p-2 taak-datums'>".$sdatum."</div>";
             echo "<div class='col-md taak-button btn-group p-0'>";
-                echo "<button type='button' class='btn btn-success' onclick='taakAfronden(".$id.")'>Afronden</button>";
-                echo "<button data-bs-toggle='collapse' data-bs-target='#taakwijzigen".$id."' class='btn btn-secondary'>Wijzigen</button> ";
+                echo "<button type='button' class='btn btn-success' ".$text." onclick='taakAfronden(".$id.")'>Afronden</button>";
+                echo "<button data-bs-toggle='collapse' data-bs-target='#taakwijzigen".$id."' class='btn btn-secondary' ".$text.">Wijzigen</button> ";
                 echo "<button type='button' class='btn btn-danger' onclick='taakVerwijderen(".$id.")'>Verwijderen</button>";
             echo "</div>";
         echo "</div>";
-        echo "<div class='row collapse rounded-bottom-2 border-top border-dark mb-2 bg-light' id='taakwijzigen".$id."'> ";
-            echo "<div class='col-md p-2'> ";
-                echo "<input type='text' value='".$naam."' name='taaknaam' id='edittaaknaam".$id."' required>";
-                echo "<input type='date' id='editbegindatum".$id."' value='".$bdatum."'>";
-                echo "<input type='date' id='editeinddatum".$id."' value='".$edatum."'>";
-                echo "<button id='btntaakadd' class='btn btn-warning' onclick='prepareEditTaak(\"".$id."\")'>Taak Wijzigen</button>";
-            echo "</div>";
-            echo "<div class='col taak-nobutton'> </div>";
+        echo "<div class='row collapse rounded-bottom border-top border-dark mb-2 bg-light' id='taakwijzigen".$id."'> ";
+            echo "<div class='col-md py-1'> <input type='text' value='".$naam."' name='taaknaam' id='edittaaknaam".$id."' required> </div>";
+            echo "<div class='col-md taak-data py-1'> <input type='date' id='editbegindatum".$id."' value='".$bdatum."'> </div>";
+            echo "<div class='col-md taak-data py-1'> <input type='date' id='editeinddatum".$id."' value='".$edatum."'> </div>";
+            echo "<div class='col taak-nobutton p-0'><button id='btntaakadd' class='btn btn-warning' onclick='prepareEditTaak(\"".$id."\")'>Taak Wijzigen</button>  </div>";
         echo "</div>";    
     }
 
