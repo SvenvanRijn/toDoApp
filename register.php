@@ -13,8 +13,8 @@ if (isset($_SESSION['username'])) {
 if (isset($_POST['submit'])) {
 	$username = $_POST['username'];
 	$email = $_POST['email'];
-	$password = md5($_POST['password']);
-	$cpassword = md5($_POST['cpassword']);
+	$password = $_POST['password'];
+	$cpassword = $_POST['cpassword'];
 
 	if ($password == $cpassword) {
 		global $database;
@@ -32,6 +32,7 @@ if (isset($_POST['submit'])) {
 			echo "<script> alert('iets ging fout'); </script>";
 		}
 		if ($result == 0) {
+			$password = sha1($password);
 			$query = "INSERT INTO users (username, email, password)
 					VALUES ('$username', '$email', '$password')";
 			$insert = $database->prepare($query);

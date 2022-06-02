@@ -6,6 +6,14 @@ error_reporting(0);
 
 session_start();
 
+$vandaag = new DateTime("now");
+$nextWeek = new DateTime("now");
+$nextWeek = date_modify($nextWeek, "+7 days");
+$diff = date_diff($vandaag, $nextWeek);
+$vandaag = $vandaag->format("Y-m-d");
+$nextWeek = $nextWeek->format("Y-m-d");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,60 +24,47 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="taakstyle.css?v=3">
-    <script src="scripts.js?v=5"></script>
+    <link rel="stylesheet" href="taakstyle.css?v=8">
+    <script src="scripts.js?v=2"></script>
     <title>ToDo-app</title>
 </head>
-<header>
-    <h1><a href="logout.php"> Project ToDo-app</a></h1>
-</header>
 <body>
-  <div class="container">
-    <h2>Takenlijst</h2> 
-        <input type="text" placeholder="Taaknaam" name="taaknaam" id="taaknaam" required>
-        <button id="btntaakadd" class="btn btn-success" onclick="prepareTaak()">Taak toevoegen</button>
-            
-    <table class="table table-bordered">
-      <div class="td">
-      <thead>
-        <tr>
-          <th>Taak</th>
-          <th>Begindatum</th>
-          <th>Einddatum</th>
-        </tr>
-      </thead>
-      <tbody id="taakdata">
-        <tr>
-          <td class="taaknaam">John</td>
-          <td class="begindatum">Doe</td>
-          <td class="einddatum">john@example.com</td>
-          <td><button type="button" class="btn btn-success">Afgerond</button></td>
-          <td><button type="button" class="btn btn-secondary">Wijzigen</button></td>
-          <td><button type="button" class="btn btn-danger">Verwijderen</button></td>
-        </tr>
-        <tr>
-          <td class="taaknaam">Mary</td>
-          <td class="begindatum">Moe</td>
-          <td class="einddatum">mary@example.com</td>
-          <td class="afgerond"><button type="button" class="btn btn-success">Afgerond</button></td>
-          <td class="wijzigen"><button type="button" class="btn btn-secondary">Wijzigen</button></td>
-          <td class="verwijderen"><button type="button" class="btn btn-danger">Verwijderen</button></td>
-        </tr>
-        <tr>
-          <td class="taaknaam">July</td>
-          <td class="begindatum">Dooley</td>
-          <td class="einddatum">july@example.com</td>
-          <td><button type="button" class="btn btn-success">Afgerond</button></td>
-          <td><button type="button" class="btn btn-secondary">Wijzigen</button></td>
-          <td><button type="button" class="btn btn-danger">Verwijderen</button></td>
-        </tr>
-      
-      </tbody>
-    </table>
+<nav class="navbar bg-info p-2">
+  <div class="container-fluid">
+    <h1 class="navbar-brand">Project ToDo-app</h1>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="logout.php"><button class="btn btn-primary" >Logout</button> </a>
+      </li>
+    </ul>
   </div>
-</body>
-<script> taakGet(); </script>
-<footer>
+</nav>
+  <div class="container-lg pb-5 taakcontainer">
+    <h2>Takenlijst</h2> 
+    <input type="text" placeholder="Taaknaam" name="taaknaam" id="taaknaam" required>
+    <input type="date" id="begindatum" value=<?php echo date("Y-m-d") ?>>
+    <input type="date" id="einddatum" value=<?php echo $nextWeek;?>>
+    <button id="btntaakadd" class="btn btn-success" onclick="prepareTaak()">Taak toevoegen</button>
+    
+    <div class='container-lg rounded-3'>
+      <div class='row bg-info rounded-2 border border-dark'> 
+        <div class='col-md p-2'><h4>Taaknaam </h4></div>
+        <div class='col-md p-2 taak-data'><b>Days left/overdue: </b>  </div>
+        <div class='col-md p-2 taak-datums'><b>Start Datum:</b> </div>
+        <div class='col-md p-2 taak-datums'><b>Eind Datum: </b></div>
+        <div class='col-md taak-nobutton btn-group p-0'> </div>  
+      </div>
+
+      <div id="taakdata"> </div>
+
+    </div>
+    
+   
+  </div>
+  <footer>
     <p>Copyright&copy: Project ToDo-app</p>
 </footer>
+</body>
+<script> taakGet(); </script>
+
 </html>

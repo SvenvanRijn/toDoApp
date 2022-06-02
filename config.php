@@ -3,6 +3,7 @@
     $dbname = "todoapp";
     $user = "root";
     $pass = "";
+    $str = "bibshcdsk";
     global $database;
     $database = new PDO("mysql:host=$dbhost;dbname=$dbname",$user, $pass);
     try{

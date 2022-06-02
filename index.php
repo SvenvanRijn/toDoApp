@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])) {
 if (isset($_POST['submit'])) {
 	global $database;
 	$email = $_POST['email'];
-	$password = md5($_POST['password']);
+	$password = sha1($_POST['password']);
 	$sql = "SELECT id, username FROM users WHERE email='$email' AND password='$password'";
 	$result = $database->prepare($sql);
 	$userdata;

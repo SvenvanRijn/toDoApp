@@ -1,16 +1,14 @@
 body, html {
     font-family: sans-serif;
+    background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(./google-taken-app1.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+
+.taakcontainer {
+    border: 1px solid black;
     background: linear-gradient(to bottom, #68eacc 0%, #497be8);
-}
-
-header {
-    height: 100%;
-    width: 100%;
-    border: 1px solid black;
-}
-
-.container {
-    border: 1px solid black;
     width: 100%;
     min-height: 740px;
 }
@@ -33,8 +31,19 @@ tr {
     height: 50px;
 }
 
-button {
-    max-width: 100px;
+.taak-button{
+    max-width: fit-content;
+}
+
+.taak-data{
+    max-width: 160px;
+}
+.taak-datums{
+    max-width: 140px;
+}
+
+.taak-nobutton{
+    max-width: 285px;
 }
 #btntaakadd{
     max-width: 200px;
